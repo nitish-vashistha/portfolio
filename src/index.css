@@ -1,0 +1,181 @@
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/space-grotesk';
+@import '@fontsource/jetbrains-mono/400.css';
+@import '@fontsource/jetbrains-mono/500.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg: #030712;
+    --surface: #0f172a;
+    --primary: #7c3aed;
+    --primary-light: #8b5cf6;
+    --cyan: #06b6d4;
+    --blue: #3b82f6;
+    --fg: #f8fafc;
+    --cursor-x: 50vw;
+    --cursor-y: 50vh;
+  }
+
+  html {
+    color-scheme: dark;
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  html.lenis {
+    height: auto;
+    scroll-behavior: auto;
+  }
+
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+
+  body {
+    @apply bg-ink font-sans text-snow antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: rgba(139, 92, 246, 0.4);
+    color: #f8fafc;
+  }
+
+  /* Accessible, on-brand focus ring everywhere. */
+  :focus-visible {
+    outline: 2px solid var(--primary-light);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--bg);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #1e293b;
+    border-radius: 8px;
+    border: 2px solid var(--bg);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #334155;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* ---- Glass surface (used sparingly) ---- */
+  .glass {
+    @apply border border-line bg-white/[0.03] backdrop-blur-xl;
+  }
+
+  /* ---- Section shell ---- */
+  .section-shell {
+    @apply mx-auto w-full max-w-page px-5 sm:px-8 lg:px-12;
+  }
+
+  /* ---- Gradient text ---- */
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary-light via-accent-blue to-accent-cyan bg-clip-text text-transparent;
+  }
+
+  .text-shine {
+    @apply bg-text-shine bg-clip-text text-transparent;
+    background-size: 200% auto;
+  }
+
+  /* ---- Eyebrow label above section headings ---- */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.25em] text-primary-light;
+  }
+
+  /* ---- Spotlight card: radial glow chases the cursor ---- */
+  .spotlight-card {
+    position: relative;
+    overflow: hidden;
+  }
+  .spotlight-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    background: radial-gradient(
+      480px circle at var(--spot-x, 50%) var(--spot-y, 50%),
+      rgba(139, 92, 246, 0.12),
+      transparent 40%
+    );
+    pointer-events: none;
+  }
+  .spotlight-card:hover::before {
+    opacity: 1;
+  }
+
+  /* ---- Interactive grid backdrop ---- */
+  .grid-bg {
+    background-image:
+      linear-gradient(rgba(248, 250, 252, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(248, 250, 252, 0.035) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+  .grid-bg-mask {
+    -webkit-mask-image: radial-gradient(
+      420px circle at var(--cursor-x) var(--cursor-y),
+      black 0%,
+      transparent 100%
+    );
+    mask-image: radial-gradient(
+      420px circle at var(--cursor-x) var(--cursor-y),
+      black 0%,
+      transparent 100%
+    );
+  }
+
+  /* ---- Edge fade for marquees ---- */
+  .mask-fade-x {
+    -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+  }
+
+  .skills-slider {
+    scrollbar-width: none;
+    scroll-padding-inline: 1.25rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .skills-slider::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@layer utilities {
+  .pause-on-hover:hover * {
+    animation-play-state: paused;
+  }
+
+  .transform-3d {
+    transform-style: preserve-3d;
+  }
+
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+}
