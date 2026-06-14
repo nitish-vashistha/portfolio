@@ -1,108 +1,171 @@
-# Nitish Vashistha — Portfolio
+# Nitish Vashistha Portfolio
 
-A premium, award-grade personal portfolio for a Frontend Software Engineer. Dark luxury theme,
-aurora gradients, cinematic scroll storytelling — and the engineering to back it up.
+This is my personal portfolio, built from scratch to present my frontend work with the same
+engineering standards I use on production projects. I designed and implemented the full experience:
+the visual system, page sections, animation layer, performance optimizations, accessibility details,
+typed content configuration, and test setup.
 
-**Stack:** React 19 · TypeScript (strict) · Vite · React Router · Tailwind CSS · Framer Motion · GSAP (ScrollTrigger) · Lenis · Lucide
+The goal was not just to make a portfolio page. I wanted a fast, polished, maintainable React
+application that shows how I think about frontend architecture, motion, UI systems, and user
+experience.
 
----
+## What I Built
 
-## Quick start
+- A responsive portfolio for my frontend engineering profile.
+- A dark premium interface with aurora backgrounds, animated text, particles, tilt cards, magnetic
+  interactions, and smooth scrolling.
+- Data-driven sections for About, Skills, Experience, Projects, Performance, Tech Stack, and Contact.
+- A reusable UI layer with buttons, cards, badges, inputs, section headings, and layout primitives.
+- A command palette with keyboard support.
+- A production build setup with route/section code splitting and manual vendor chunks.
+- Accessibility and reduced-motion handling across interactive and animated components.
+- Unit tests for utilities, hooks, UI behavior, accessibility contracts, and the app shell.
+
+## Tech Stack
+
+- React 19
+- TypeScript
+- Vite
+- React Router
+- Tailwind CSS
+- Framer Motion
+- GSAP + ScrollTrigger
+- Lenis smooth scroll
+- Lucide React icons
+- Vitest + React Testing Library
+- ESLint
+
+## Running The Project
 
 ```bash
 npm install
-npm run dev        # local dev server with HMR
-npm run build      # typecheck (tsc -b) + production build
-npm run preview    # serve the production build locally
-npm test           # vitest + React Testing Library
-npm run lint       # eslint (typescript-eslint, react-hooks rules)
+npm run dev
 ```
 
-> Requires Node 18.18+ (Vite 6 / ESLint 9 are pinned for Node 18 compatibility).
+The local development server starts with Vite and hot module replacement.
 
----
+Useful commands:
 
-## Architecture
-
-Feature-based structure: shared primitives live under `components/`, every page section is a
-self-contained feature, and all content is data-driven from `config/` so copy changes never touch
-component code.
-
+```bash
+npm run build       # typecheck and create a production build
+npm run preview     # preview the production build locally
+npm test            # run Vitest tests
+npm run test:watch  # run tests in watch mode
+npm run lint        # run ESLint
+npm run typecheck   # run TypeScript checks without building
 ```
+
+Requires Node 18.18 or newer.
+
+## Project Structure
+
+I organized the code by responsibility so every page section can evolve independently while shared
+behavior stays reusable.
+
+```text
 src/
 ├── components/
-│   ├── ui/            # design-system primitives (Button via cva, Card, Badge, Input, …)
-│   ├── effects/       # motion system (SplitText, TiltCard, Magnetic, Particles, Marquee, …)
-│   └── layout/        # app shell (Navbar, Footer, Preloader, CommandMenu, SmoothScroll, ErrorBoundary)
-├── features/          # one folder per page section (hero, about, skills, experience,
-│                      #   projects, performance, techstack, contact)
-├── pages/             # route components (HomePage, NotFoundPage) — route-level code splitting
-├── hooks/             # typed custom hooks (useForm, useMagnetic, useCountUp, useMediaQuery,
-│                      #   useActiveSection, useKonami)
-├── config/            # all content as typed data (site, skills, projects, experience, performance)
-├── types/             # shared domain types
-├── lib/               # utilities (cn, debounce, throttle, clamp)
-└── test/              # vitest setup (jsdom polyfills)
+│   ├── ui/            # reusable design-system primitives
+│   ├── effects/       # animation and interaction components
+│   └── layout/        # navbar, footer, command menu, preloader, shell behavior
+├── features/          # portfolio sections: hero, about, skills, experience, projects, etc.
+├── pages/             # route-level pages
+├── hooks/             # custom hooks for forms, media queries, scroll state, count-up, etc.
+├── config/            # typed content for profile, projects, skills, experience, performance
+├── types/             # shared TypeScript types
+├── lib/               # small utilities
+└── test/              # Vitest setup
 ```
 
-### Design system
+## Architecture Decisions
 
-Tokens live in `tailwind.config.ts` (semantic colors `ink/snow/primary/accent`, the house
-`out-expo` ease, glow shadows, keyframes) and `src/index.css` (CSS custom properties, glass and
-spotlight utilities). Components never use raw hex values.
+### Content Is Config-Driven
 
-### Motion system
+Most portfolio content lives in `src/config`. Projects, skills, experience, site metadata, and
+performance highlights are defined as typed data. This keeps copy and portfolio updates separate
+from component logic.
 
-- **Lenis + GSAP**: Lenis drives smooth scroll through GSAP's ticker so ScrollTrigger never
-  drifts (`components/layout/SmoothScroll.tsx`). The About timeline is scroll-scrubbed GSAP.
-- **Framer Motion**: reveals, split-text, layout animations (nav pill), morphing hero headline,
-  spring-based tilt/magnetic/cursor effects — all via motion values, zero re-renders per frame.
-- **Pure CSS where possible**: orbit rings, marquee, aurora drift run on the compositor.
-- **Reduced motion**: every effect checks `prefers-reduced-motion`; Lenis, particles and the
-  custom cursor disable entirely, reveals fall back to fades.
+### Feature-Based Sections
 
-### Performance budget
+Each major section lives under `src/features`. This keeps the page easy to maintain because the Hero,
+About, Skills, Experience, Projects, Performance, Tech Stack, and Contact areas own their own UI and
+behavior.
 
-- Route- and section-level code splitting: the initial bundle pays for the hero only; every
-  section below the fold is a `lazy()` chunk (see the build output — ~1–10 kB per section).
-- Manual vendor chunks (`react`, `framer-motion`, `gsap+lenis`) for long-lived caching.
-- Particles: one canvas, one rAF loop, DPR-capped, paused off-screen and on hidden tabs.
-- Hover/cursor effects write CSS custom properties or motion values — no React renders.
-- Self-hosted variable fonts (no third-party requests), `tabular-nums` to avoid metric shift,
-  fixed headline min-height to prevent CLS during the morph.
+### Reusable UI Primitives
 
-### Accessibility (WCAG AA targets)
+Common UI elements live in `src/components/ui`. The Button component uses variant-based styling, and
+shared primitives keep spacing, radius, color, focus states, and interaction behavior consistent.
 
-Semantic landmarks, skip-link, focus-visible rings, full keyboard support in the ⌘K palette
-(listbox semantics, arrow keys, focus management), split-text exposes whole sentences via
-`aria-label`, decorative layers are `aria-hidden`, the preloader marks the page `inert` until
-revealed, and forms wire `aria-invalid`/`aria-describedby`/`role="alert"`.
+### Motion Without Unnecessary Re-Renders
 
-### Testing
+I used Framer Motion for component-level animation, GSAP for scroll-linked timelines, and Lenis for
+smooth scrolling. Expensive visual effects are isolated so animation work does not cause unnecessary
+React re-renders.
 
-Vitest + React Testing Library (`npm test`): unit tests for utilities (the throttle test caught a
-real leading-edge bug), the generic `useForm` hook lifecycle, Button behavior, the SplitText
-accessibility contract, and an App-level smoke test that mounts the entire shell.
+### Performance-Conscious Build
 
----
+The Vite build splits large dependencies into separate vendor chunks:
 
-## Easter eggs
+- `vendor-react`
+- `vendor-motion`
+- `vendor-gsap`
 
-- `⌘K` / `Ctrl+K` — command palette
-- Konami code (`↑↑↓↓←→←→BA`) — particle burst + aurora boost
+Below-the-fold sections are lazy-loaded so the initial page can render quickly.
 
----
+### Accessibility
+
+I added semantic sections, keyboard navigation, visible focus styles, command-menu keyboard support,
+ARIA attributes for split text and form validation, reduced-motion handling, and decorative layers
+marked as hidden from assistive technology.
+
+## Main Features
+
+- Animated hero section with orbiting technology labels.
+- Smooth scroll and scroll progress.
+- Section reveal animations.
+- Interactive project cards with custom mockups.
+- Skills and technology marquee.
+- Performance-focused stats and highlights.
+- Contact form with reusable form state handling.
+- Command palette using `Ctrl+K` / `Cmd+K`.
+- Konami-code easter egg for an extra visual effect.
+- Custom 404 page.
+
+## Testing
+
+The project uses Vitest and React Testing Library. Current tests cover:
+
+- Utility helpers.
+- The reusable form hook.
+- Button behavior.
+- SplitText accessibility behavior.
+- Command menu behavior.
+- App-level rendering smoke test.
+
+Run all tests with:
+
+```bash
+npm test
+```
 
 ## Deployment
 
-Static output in `dist/` — deploy anywhere:
+This is a static Vite app. A production build is generated in `dist/`.
 
-**Vercel** — `vercel` (framework preset: Vite). Add a SPA rewrite for the 404 route:
-`{ "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }] }`
+```bash
+npm run build
+```
 
-**Netlify** — build `npm run build`, publish `dist`, redirect `/* /index.html 200`.
+It can be deployed to Vercel, Netlify, GitHub Pages, or any static hosting provider.
 
-**GitHub Pages** — `npm run build && npx gh-pages -d dist` (set Vite `base` if not at root).
+For SPA routing, configure all routes to serve `index.html`.
 
-Before going live: replace `https://nitishvashistha.dev` in `index.html`, `robots.txt` and
-`sitemap.xml` with the real domain, and drop the latest resume PDF into `public/nitish_resume.pdf`.
+## Notes
+
+- Resume file: `public/nitish_resume.pdf`
+- Site metadata: `src/config/site.ts`
+- Project data: `src/config/projects.ts`
+- SEO files: `public/robots.txt` and `public/sitemap.xml`
+
+Before deploying with a custom domain, update the domain values in `src/config/site.ts`,
+`public/robots.txt`, `public/sitemap.xml`, and `index.html`.
