@@ -51,7 +51,7 @@ export function Hero({ glowBoost = false }: { glowBoost?: boolean }) {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-cyan opacity-60" />
               <span className="relative inline-flex h-2 w-2 rounded-full bg-accent-cyan" />
             </span>
-            Available for ambitious teams · {site.location}
+            Available for ambitious teams · {site.availability}
           </motion.p>
 
           {/* Morphing headline — fixed min-height prevents layout shift between phases */}

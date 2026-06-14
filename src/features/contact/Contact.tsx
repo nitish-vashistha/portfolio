@@ -54,7 +54,7 @@ export function Contact() {
           align="center"
           eyebrow="Contact"
           title="Let's Build Something Exceptional"
-          description="Open to senior frontend roles, ambitious products and conversations about making the web faster."
+          description="Open to senior frontend roles, remote or hybrid teams, ambitious products and conversations about making the web faster."
         />
 
         <div className="mx-auto grid max-w-5xl gap-6 lg:grid-cols-[1fr_1.2fr]">
@@ -75,7 +75,11 @@ export function Contact() {
               href={site.linkedin}
               external
             />
-            <ContactDetail icon={MapPin} label="Location" value={site.location} />
+            <ContactDetail
+              icon={MapPin}
+              label="Availability"
+              value={`${site.location} | ${site.availability}`}
+            />
           </div>
 
           {/* Form */}

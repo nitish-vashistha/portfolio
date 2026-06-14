@@ -50,7 +50,7 @@ export function Footer() {
 
         <div className="flex flex-col items-center gap-1 text-center font-mono text-xs text-snow/35">
           <p>
-            © {new Date().getFullYear()} {site.name} · {site.location}
+            © {new Date().getFullYear()} {site.name} · {site.availability}
           </p>
           <p>Crafted with React 19, TypeScript &amp; an unhealthy obsession with 60fps.</p>
         </div>

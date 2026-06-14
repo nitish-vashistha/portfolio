@@ -9,6 +9,7 @@ export const site = {
   phone: '+91 93067 35003',
   phoneHref: 'tel:+919306735003',
   location: 'Noida, India',
+  availability: 'Open to remote, hybrid, and relocation opportunities',
   linkedin: 'https://linkedin.com/in/vashisthnitish',
   resume: '/nitish_resume.pdf',
   url: 'https://nitishvashistha.dev',
