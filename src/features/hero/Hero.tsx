@@ -80,9 +80,9 @@ export function Hero({ glowBoost = false }: { glowBoost?: boolean }) {
                 >
                   <SplitText text="Building Fast." delay={0.1} />
                   <br />
-                  <span className="text-shine animate-shine">
-                    <SplitText text="Beautiful." delay={0.3} />
-                  </span>{' '}
+                  <SplitText text="Beautiful." delay={0.3} />
+                  {/* <span className="text-shine animate-shine">
+                  </span>{' '} */}
                   <br className="sm:hidden" />
                   <SplitText text="Scalable Experiences." delay={0.45} />
                 </motion.span>
