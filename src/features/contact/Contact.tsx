@@ -233,7 +233,9 @@ function ContactDetail({
       </span>
       <span className="min-w-0">
         <span className="block font-mono text-[10px] uppercase tracking-[0.25em] text-snow/40">{label}</span>
-        <span className="block truncate text-sm text-snow/85">{value}</span>
+        <span className="block break-words text-sm leading-relaxed text-snow/85 [overflow-wrap:anywhere]">
+          {value}
+        </span>
       </span>
     </>
   )
