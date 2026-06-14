@@ -41,7 +41,7 @@ export function Contact() {
     )
 
   return (
-    <section id="contact" aria-label="Contact" className="relative py-28 lg:py-36">
+    <section id="contact" aria-label="Contact" className="relative overflow-hidden py-28 lg:py-36">
       <div aria-hidden className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-line to-transparent" />
       {/* Ambient glow anchoring the closing section */}
       <div
@@ -83,7 +83,7 @@ export function Contact() {
           </div>
 
           {/* Form */}
-          <Reveal delay={0.15}>
+          <Reveal delay={0.15} className="min-w-0">
             <Card className="relative overflow-hidden p-6 sm:p-8">
               <AnimatePresence mode="wait">
                 {status === 'success' ? (
@@ -241,7 +241,7 @@ function ContactDetail({
   )
 
   return (
-    <Reveal>
+    <Reveal className="min-w-0 overflow-hidden">
       <Card className="group flex items-center gap-4 p-4 transition-colors duration-300 hover:border-primary-light/35">
         {href ? (
           <a

@@ -16,7 +16,7 @@ export function Experience() {
   const spineScale = useSpring(scrollYProgress, { stiffness: 90, damping: 24 })
 
   return (
-    <section id="experience" aria-label="Experience" className="relative py-28 lg:py-36">
+    <section id="experience" aria-label="Experience" className="relative py-28 lg:py-36 overflow-hidden">
       <div aria-hidden className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-line to-transparent" />
       <div className="section-shell">
         <SectionHeading

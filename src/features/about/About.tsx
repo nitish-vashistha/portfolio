@@ -55,7 +55,7 @@ export function About() {
   }, [reduced])
 
   return (
-    <section id="about" aria-label="About" className="relative py-28 lg:py-36">
+    <section id="about" aria-label="About" className="relative py-28 lg:py-36 overflow-hidden">
       <div className="section-shell">
         <SectionHeading
           eyebrow="About"
